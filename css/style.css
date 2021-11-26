@@ -32,3 +32,23 @@ button {
         transform: translateY(-30vh);
     }
 }
+
+
+* {
+    box-sizing: border-box;
+}
+
+div {
+    padding:10px;
+}
+
+#image img {
+    width:100%;
+}
+
+video {
+    display: none;
+}
+
+canvas {
+}
