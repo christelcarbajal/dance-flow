@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>danceFlow</title>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <script src="./js/script.js" defer></script>
 </head>
 <body>
-
 <h1>danceFlow</h1>
-
-<div>Animate emoji's with the like button <button id="heart">LIKE</button>
+<div>Animate emoji's with the like button
+    <button id="heart">LIKE</button>
 </div>
 
-<script src="./js/script.js"></script>
-
+<div>
+    <canvas id="canvas" width="640" height="360"></canvas>
+    <video id="video" width="640" height="360" autoplay></video>
+</div>
+<div id="message">Loading...</div>
 </body>
 </html>
 
