@@ -1,10 +1,17 @@
+// import danceMoves from 'danceMoves.js';
+// console.log(danceMoves);
+
 const heartButton = document.querySelector("#heart");
 const emoji = document.querySelector("#emoji");
 const div = document.querySelector("#message")
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const audio = new Audio('../music.mp3');
 
+let time = 1;
+let isModelLoaded = false;
+let noMusicPlaying = true;
 let poses = []
 ctx.strokeStyle = 'red';
 ctx.lineWidth = 3;
@@ -24,7 +31,6 @@ function lotsOfEmoji() {
 }
 
 function createEmoji() {
-
     const div = document.createElement("div");
     document.body.appendChild(div);
     div.innerHTML = emojiArray[Math.floor(Math.random() * 5)];
@@ -34,6 +40,14 @@ function createEmoji() {
     div.classList.add("moving");
     // remove the div at the end of the animation!
     div.addEventListener("animationend", (e) => e.target.remove());
+}
+
+function playMusic() {
+    if(noMusicPlaying) {
+        console.log('started')
+        audio.play();
+        noMusicPlaying = false;
+    }
 }
 
 //Tracking part
@@ -47,6 +61,7 @@ poseNet.on('pose', (results) => {
 // When the model is loaded
 function modelLoaded() {
     console.log('Model Loaded!');
+    isModelLoaded = true;
     div.innerHTML = "Posenet model loaded!"
 }
 
@@ -63,13 +78,33 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     });
 }
 
-// A function to draw the video and poses into the canvas independently of posenet
 function drawCameraIntoCanvas() {
-    ctx.drawImage(video, 0, 0, 640, 360); //16:9
-    drawKeypoints()
-    drawSkeleton()
-    detectWrists()
-    window.requestAnimationFrame(drawCameraIntoCanvas);
+    if(isModelLoaded) {
+        // ctx.drawImage(video, 0, 0, 640, 360); //16:9
+        ctx.beginPath();
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = 'black';
+        ctx.stroke();
+        drawKeypoints();
+        drawSkeleton();
+
+        //activating pose detection (inside here you can place timestamps)
+        detectPoses();
+        playMusic();
+
+        //timer
+        time+=1;
+        console.log(time)
+
+        if(time == 54) {
+            console.log('begin zang');
+        }
+    } else {
+        console.log('No model')
+    }
+    setTimeout(() => {
+        window.requestAnimationFrame(drawCameraIntoCanvas);
+    }, 500);
 }
 
 function detectWrists(){
@@ -81,6 +116,14 @@ function detectWrists(){
                 lotsOfEmoji()
             }
         }
+    }
+}
+
+function detectPoses() {
+    // console.log(poses.length)
+    for (let pose of poses) {
+        
+        //hiero komen functies die danspasjes detecten
     }
 }
 
