@@ -1,6 +1,6 @@
 body {
-    background: black;
-    color: white;
+    background: black !important;
+    color: aliceblue !important;
     font-size: 1.2em;
     font-family: sans-serif;
 }
@@ -9,17 +9,42 @@ button {
     font-size: 1.2em;
 }
 
+.title {
+    font-family: 'Shippori Antique', sans-serif;
+    text-decoration: none;
+    font-size: 3rem;
+    color: aliceblue;
+}
+
+.uptext {
+    margin-top: 50px;
+}
+
 .emoji {
     font-size: 4em;
     width: 300px;
     text-align: right;
     position: absolute;
     opacity: 0;
-    transform: translateY(100vh);
+    transform: translateY(90vh);
+
+    margin-left: 400px;  
 }
 
 .moving {
     animation: moveToTop 3s forwards;
+}
+
+.animate_text {
+   
+}
+
+.center {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 @keyframes moveToTop {
@@ -51,4 +76,5 @@ video {
 }
 
 canvas {
+    
 }
