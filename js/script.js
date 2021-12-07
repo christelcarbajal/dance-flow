@@ -1,4 +1,4 @@
-const heartButton = document.querySelector("#heart");
+// const heartButton = document.querySelector("#heart");
 const emoji = document.querySelector("#emoji");
 const div = document.querySelector("#message")
 const video = document.getElementById("video");
@@ -17,15 +17,17 @@ ctx.scale(-1, 1);
 
 let animating = false
 
-heartButton.addEventListener("click", () => lotsOfEmoji());
+// heartButton.addEventListener("click", () => lotsOfEmoji(20));
 emojiArray = ["❤️‍🔥", "🌟", "💯", "💥", "👌"];
 
-function lotsOfEmoji() {
-    animating = true
-    for (let i = 0; i < 20; i++) {
-        createEmoji("left");
-        createEmoji("right");
-    }
+function lotsOfEmoji(x) {
+    // if(animating === false) {
+        // animating = true
+        for (let i = 0; i < x; i++) {
+            createEmoji("left");
+            createEmoji("right");
+        }
+    // }
 }
 
 function createEmoji(position) {
@@ -37,7 +39,10 @@ function createEmoji(position) {
     div.style.animationDelay = `${Math.random()}s`;
     div.classList.add("moving");
     // remove the div at the end of the animation!
-    div.addEventListener("animationend", (e) => e.target.remove());
+    div.addEventListener("animationend", (e) => {
+        e.target.remove();
+        animating = false;
+    });
 }
 
 function playMusic() {
@@ -66,6 +71,7 @@ function modelLoaded() {
 // Create a webcam capture
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        // video.src = "move_1.mp4";
         video.srcObject = stream;
         video.play();
 
@@ -76,7 +82,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     });
 }
 
-function drawCameraIntoCanvas() {
+function createTWY(danceMove) {
+    videoDiv = document.getElementById('videoDiv');
+    videoDiv.innerHTML = `
+    <video src=${danceMove} width="900px" height="500px" autoplay></video>
+    `;
+}
+
+function gameLoop() {
     if(isModelLoaded) {
         // ctx.drawImage(video, 0, 0, 640, 360); //16:9
         ctx.beginPath();
@@ -90,37 +103,36 @@ function drawCameraIntoCanvas() {
         detectPoses();
         playMusic();
 
+        console.log(animating)
+
         //timer
         time+=1;
         console.log(time)
 
-        if(time == 54) {
+
+
+        if(time == 10) {
             console.log('begin zang');
+            createTWY("move_1.mp4");
         }
     } else {
         console.log('No model')
     }
     setTimeout(() => {
-        window.requestAnimationFrame(drawCameraIntoCanvas);
+        window.requestAnimationFrame(gameLoop);
     }, 500);
 }
 
-function detectWrists(){
-    for(let p of poses) {
-        console.log(p.pose)
-        console.log(`${p.pose.leftWrist.y} , ${p.pose.rightWrist.y}`)
-        if(p.pose.leftWrist.y < 50 && p.pose.rightWrist.y < 50) {
-            if(!animating) {
-                lotsOfEmoji()
-            }
-        }
-    }
-}
-
 function detectPoses() {
-    // console.log(poses.length)
+    console.log(poses.length)
     for (let pose of poses) {
+        pose = pose.pose;
         
+
+        if(pose.leftWrist.y < pose.nose.y && pose.leftWrist.confidence > 0.1 && time > 10 && time < 73) {
+            console.log(pose.leftWrist);
+            lotsOfEmoji(3);
+        }
         //hiero komen functies die danspasjes detecten
     }
 }
@@ -159,4 +171,4 @@ function drawSkeleton() {
     }
 }
 
-drawCameraIntoCanvas()
+gameLoop()
