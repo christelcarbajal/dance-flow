@@ -31,16 +31,26 @@ button {
 .emoji {
     font-size: 4em;
     width: 300px;
-    text-align: right;
+    text-align: center;
     position: absolute;
+    
     opacity: 0;
-    transform: translateY(90vh);
+    /* transform: translateY(90vh); */
+}
 
-    margin-left: 400px;  
+.emoji-pos-left {
+    left: 50px;
+    margin-right: 20px;
+}
+
+.emoji-pos-right {
+    right: 100px;
+    margin-right: 20px;
+    /* float: right; */
 }
 
 .moving {
-    animation: moveToTop 3s forwards;
+    animation: moveToTop 5s forwards;
 }
 
 .animate_text {
@@ -58,11 +68,11 @@ button {
 @keyframes moveToTop {
     from {
         opacity: 0;
-        transform: translateY(100vh);
+        transform: translateY(50vh);
     }
     to {
         opacity: 1;
-        transform: translateY(-30vh);
+        transform: translateY(-150vh);
     }
 }
 

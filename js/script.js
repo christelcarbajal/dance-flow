@@ -1,6 +1,3 @@
-// import danceMoves from 'danceMoves.js';
-// console.log(danceMoves);
-
 const heartButton = document.querySelector("#heart");
 const emoji = document.querySelector("#emoji");
 const div = document.querySelector("#message")
@@ -26,16 +23,17 @@ emojiArray = ["❤️‍🔥", "🌟", "💯", "💥", "👌"];
 function lotsOfEmoji() {
     animating = true
     for (let i = 0; i < 20; i++) {
-        createEmoji();
+        createEmoji("left");
+        createEmoji("right");
     }
 }
 
-function createEmoji() {
+function createEmoji(position) {
     const div = document.createElement("div");
     document.body.appendChild(div);
     div.innerHTML = emojiArray[Math.floor(Math.random() * 5)];
-    div.style.width = Math.random() * 600 + "px";
-    div.classList.add("emoji");
+    div.style.width = Math.random() * 300 + "px";
+    div.classList.add("emoji", "emoji-pos-" + position);
     div.style.animationDelay = `${Math.random()}s`;
     div.classList.add("moving");
     // remove the div at the end of the animation!
