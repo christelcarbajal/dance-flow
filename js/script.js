@@ -83,7 +83,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 
 function createTWY(danceMove) {
-    videoDiv = document.getElementById('videoDiv');
+    videoDiv = document.getElementById('centerDiv');
     videoDiv.innerHTML = `
     <video src=${danceMove} width="900px" height="500px" autoplay></video>
     `;

@@ -10,6 +10,7 @@ body {
     color: aliceblue !important;
     font-size: 1.2em;
     font-family: sans-serif;
+    overflow:hidden;
 }
 
 button {
@@ -88,10 +89,8 @@ div {
     width:100%;
 }
 
-video {
-    /* display: none; */
-}
-
-canvas {
-    
+.centered {
+    display: flex;
+    justify-content:center;
+    align-items: center;
 }
