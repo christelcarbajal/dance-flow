@@ -6,6 +6,8 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const audio = new Audio('../music.mp3');
 
+const playerCount = document.getElementById('playerCount');
+
 let time = 1;
 let isModelLoaded = false;
 let noMusicPlaying = true;
@@ -19,6 +21,28 @@ let animating = false
 
 // heartButton.addEventListener("click", () => lotsOfEmoji(20));
 emojiArray = ["❤️‍🔥", "🌟", "💯", "💥", "👌"];
+
+let timeline = [
+
+    {
+        "start":5,
+        "end":20,
+        "func":"playerCount.innerHTML = poses.length"
+    },
+
+    {
+        "start":21,
+        "end":21,
+        "func":"console.log('begin zang'); createTWY('move_1.mp4'); "
+    },
+
+    {
+        "start":21,
+        "end":40,
+        "func":"detectPoses();"
+    }
+
+]
 
 function lotsOfEmoji(x) {
     // if(animating === false) {
@@ -100,21 +124,28 @@ function gameLoop() {
         drawSkeleton();
 
         //activating pose detection (inside here you can place timestamps)
-        detectPoses();
+        
         playMusic();
-
-        console.log(animating)
 
         //timer
         time+=1;
         console.log(time)
 
-
-
-        if(time == 10) {
-            console.log('begin zang');
-            createTWY("move_1.mp4");
+        for(let timing of timeline) {
+            if(time >= parseInt(timing.start) && time <= parseInt(timing.end)) {
+                var F = new Function (timing.func);
+                F()
+            }
         }
+
+        // if ( time <= 20) {
+        //     playerCount.innerHTML = poses.length;
+        // }
+
+        // if(time == 21) {
+        //     console.log('begin zang');
+        //     createTWY("move_1.mp4");
+        // }
     } else {
         console.log('No model')
     }
@@ -124,7 +155,6 @@ function gameLoop() {
 }
 
 function detectPoses() {
-    console.log(poses.length)
     for (let pose of poses) {
         pose = pose.pose;
         
