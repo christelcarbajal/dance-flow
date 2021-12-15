@@ -1,0 +1,368 @@
+* {
+  font-family: sans-serif;
+}
+
+label {
+  width: 150px;
+  display: inline-block;
+}
+
+input {
+  padding: 6px;
+}
+
+body {
+  background-color: #000000;
+  background-position: top;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: black;
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-size: 1.1em;
+}
+
+main {
+  max-width: 610px;
+  margin: 0 auto;
+  color: black;
+}
+
+section {
+  margin: 20px;
+  padding: 20px;
+  background-color: lightgray;
+}
+
+section div {
+  margin-top: 16px ;
+}
+
+a {
+  color: black;
+}
+
+h1 {
+  margin: 0;
+  border-bottom-style: solid;
+  border-radius: unset;
+}
+
+h2 {
+  background-color: black;
+  color: white;
+}
+
+.bio-img {
+  display:inline-block;
+  width: 56%;
+  margin-right: 13px;
+  border-radius: 165px;
+  margin-bottom: 58px;
+}
+
+.biografie-tekst {
+  font-family: sans-serif;
+  font-style: italic;
+  width: 40%;
+  display: inline-block;
+  font-size: 1.1em;
+  text-align: left;
+  position: center;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.img-slider .navigation{
+  z-index: 2;
+  position: absolute;
+  display: flex;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.img-slider .navigation .btn{
+  background: black;
+  width: 12px;
+  height: 12px;
+  margin: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.img-slider .navigation .btn.active {
+  background: dodgerblue;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+}
+
+.img-slider{
+  position: relative;
+  width: 510px;
+  height: 640px;
+  margin: 10px;
+  padding: 5px;
+  background: none;
+  border-radius: 20px;
+}
+
+.img-slider .slide{
+  z-index: 1;
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  clip-path: circle(0% at 0 50%);
+}
+
+.img-slider .slide.active{
+  clip-path: circle(150% at 0 50%);
+  transition: 2s;
+  transition-property: clip-path;
+}
+
+.img-slider .slide img{
+  z-index: 1;
+  width: 100%;
+  border-radius: 5px;
+}
+
+img {
+  width: 100%;
+}
+
+/*footer a {*/
+/*    color: white;*/
+/*}*/
+
+/*footer {*/
+/*    background-color: black;*/
+/*    text-align: center;*/
+/*    padding: 70px;*/
+/*    color: white;*/
+/*}*/
+
+.redText {
+  color: red;
+}
+
+.greenText {
+  color: green;
+}
+
+.img-slider, .img-container .slide{
+  max-width:100%;
+}
+
+iframe{
+  max-width: 100%;
+}
+
+.errors {
+  color: red;
+}
+
+@media screen and (max-width: 550px) {
+  header{
+      background-size: 375px;
+  }
+
+  body {
+      display: block;
+  }
+
+  nav {
+      display: block;
+  }
+
+  .img-slider.navigation {
+      bottom: -20px;
+      left: 27%;
+      transform: translateX(-50%) ;
+  }
+
+  .section div {
+      margin-top: 3px;
+  }
+
+  label {
+      width: 200px;
+      display: block;
+  }
+
+  .img-slider{
+      margin: 0;
+      padding: 0;
+      height: 300px;
+  }
+}
+
+#table{
+  width: 50%;
+}
+
+th, td {
+  padding: 10px;
+}
+
+/* HOME img slider manual */
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+  width: 100%;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+  align-content: center;
+}
+
+.active, .dot:hover {
+  background-color: lightgray;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+
+/* The grid: Four equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+}
+
+/* Style the images inside the grid */
+.column img {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.column img:hover {
+  opacity: 1;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* The expanding image container (positioning is needed to position the close button and the text) */
+.container {
+  position: relative;
+  display: none;
+}
+
+/* Expanding image text */
+#imgtext {
+  font-family: sans-serif;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: black;
+  background-color: white;
+  background-size: 1.5em ;
+  font-size: 1.2em;
+  border-radius: 4px;
+
+}
+
+/* Closable button inside the image */
+.closebtn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+#expandedImg {
+  width: 100%;
+}
