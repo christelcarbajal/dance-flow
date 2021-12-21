@@ -67,28 +67,28 @@ btns.forEach((btn, i) => {
 });
 
 // Javascript for image slider autoplay navigation
-let repeat = function (activeClass) {
-    let active = document.getElementsByClassName('active');
-    let i = 1;
-    let repeater = () => {
-        setTimeout(function () {
-            [...active].forEach((activeSlide) => {
-                activeSlide.classList.remove('active');
-            });
+// let repeat = function (activeClass) {
+//     let active = document.getElementsByClassName('active');
+//     let i = 1;
+//     let repeater = () => {
+//         setTimeout(function () {
+//             [...active].forEach((activeSlide) => {
+//                 activeSlide.classList.remove('active');
+//             });
 
-            slides[i].classList.add("active");
-            btns[i].classList.add('active');
-            i++;
+//             slides[i].classList.add("active");
+//             btns[i].classList.add('active');
+//             i++;
 
-            if (slides.length === i) {
-                i = 0;
-            }
-            if (i >= slides.length) {
-                return;
-            }
-            repeater();
-        }, 5000);
-    }
-    repeater();
-}
-repeat();
+//             if (slides.length === i) {
+//                 i = 0;
+//             }
+//             if (i >= slides.length) {
+//                 return;
+//             }
+//             repeater();
+//         }, 5000);
+//     }
+//     repeater();
+// }
+// repeat();
