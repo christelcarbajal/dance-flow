@@ -163,7 +163,7 @@ function detectPoses() {
             console.log(pose.leftWrist);
             lotsOfEmoji(3);
         }
-        //hiero komen functies die danspasjes detecten
+        //hier komen functies die danspasjes detecten
     }
 }
 
