@@ -4,7 +4,7 @@ const div = document.querySelector("#message")
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const audio = new Audio('../music.mp3');
+const audio = new Audio('music.mp3');
 
 const playerCount = document.getElementById('playerCount');
 
@@ -43,28 +43,29 @@ let timeline = [
     },
 
     {
-        "start":21,
+        "start":1,
         "end":40,
         //detectPoses() moet hiero nog ff veranderd worden naar goede functie!
-        "func":"detectPoses();"
+        "func":"detectPoses('handsUp', 3);"
     }
 
 ];
 
-let dancemoves = [
+let dancemoves = {
 
-    {
-        "handsUp" : {
-            "bodyPart1" : "leftWrist",
-            "operator" : "<",
-            "bodyPart2" : "nose",
-            "axis" : "y"
-        },
-        "bla" : {
-
-        }
+    "handsUp" : {
+        "bodyPart1" : "leftWrist",
+        "operator" : "<",
+        "bodyPart2" : "nose",
+        "axis" : "y"
+    },
+    "handsDown" : {
+        "bodyPart1" : "leftWrist",
+        "operator" : ">",
+        "bodyPart2" : "nose",
+        "axis" : "y"
     }
-];
+};
 
 let operators = {
     "==": function(a,b){return a==b;},
@@ -155,7 +156,7 @@ function gameLoop() {
 
         //activating pose detection (inside here you can place timestamps)
         
-        playMusic();
+        // playMusic();
 
         //timer
         time+=1;
@@ -190,35 +191,35 @@ function gameLoop() {
  * @param {int} feedback Amount of feedback
  */
 
-function detectPoses(dancemove, feedback) {
-    console.log(dancemoves);
+function detectPoses(move, feedback) {
+    move = dancemoves[move]
+    console.log(move);
     // var one = "4",
     // two = "6",
     // op = "==";
-    // if (op in operators && operators[op](+one, +two)) {
-    //     //do something
-    // }
+    // && operators[op](+one, +two)
+    for (let pose of poses) {
+        pose = pose.pose;
+
+        if (move.operator in operators && operators[move.operator](pose[move.bodyPart1][move.axis], pose[move.bodyPart2][move.axis])) {
+            lotsOfEmoji(feedback);
+        } else {
+            console.log('geen goede houding')
+            console.log(pose[move.bodyPart2])
+        }
+    }
 
 
     // for (let pose of poses) {
     //     pose = pose.pose;
         
 
-<<<<<<< Updated upstream
-        if(pose.leftWrist.y < pose.nose.y && pose.leftWrist.confidence > 0.1 && time > 10 && time < 73) {
-            console.log(pose.leftWrist);
-            lotsOfEmoji(3);
-        }
-        //hier komen functies die danspasjes detecten
-    }
-=======
     //     if(pose.leftWrist.y < pose.nose.y && pose.leftWrist.confidence > 0.1 && time > 10 && time < 73) {
     //         console.log(pose.leftWrist);
     //         lotsOfEmoji(3);
     //     }
     //     //hiero komen functies die danspasjes detecten
     // }
->>>>>>> Stashed changes
 }
 
 
