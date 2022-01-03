@@ -20,7 +20,13 @@ ctx.scale(-1, 1);
 let animating = false
 
 // heartButton.addEventListener("click", () => lotsOfEmoji(20));
-emojiArray = ["❤️‍🔥", "🌟", "💯", "💥", "👌"];
+emojiArray = [
+    "❤️‍🔥", 
+    "🌟", 
+    "💯", 
+    "💥", 
+    "👌"
+];
 
 let timeline = [
 
@@ -33,16 +39,40 @@ let timeline = [
     {
         "start":21,
         "end":21,
-        "func":"console.log('begin zang'); createTWY('move_1.mp4'); "
+        "func":"console.log('begin zang'); createArtist('move_1.mp4'); "
     },
 
     {
         "start":21,
         "end":40,
+        //detectPoses() moet hiero nog ff veranderd worden naar goede functie!
         "func":"detectPoses();"
     }
 
-]
+];
+
+let dancemoves = [
+
+    {
+        "handsUp" : {
+            "bodyPart1" : "leftWrist",
+            "operator" : "<",
+            "bodyPart2" : "nose",
+            "axis" : "y"
+        },
+        "bla" : {
+
+        }
+    }
+];
+
+let operators = {
+    "==": function(a,b){return a==b;},
+    "<=": function(a,b){return a<=b;},
+    ">=": function(a,b){return a>=b;},
+    "<": function(a,b){return a<b;},
+    ">": function(a,b){return a>b;}
+};
 
 function lotsOfEmoji(x) {
     // if(animating === false) {
@@ -106,7 +136,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     });
 }
 
-function createTWY(danceMove) {
+function createArtist(danceMove) {
     videoDiv = document.getElementById('centerDiv');
     videoDiv.innerHTML = `
     <video src=${danceMove} width="900px" height="500px" autoplay></video>
@@ -154,17 +184,41 @@ function gameLoop() {
     }, 500);
 }
 
-function detectPoses() {
-    for (let pose of poses) {
-        pose = pose.pose;
+/**
+ * @description Detects if dancemove is excecuted by player
+ * @param {obj} dancemove Dancemove as Object
+ * @param {int} feedback Amount of feedback
+ */
+
+function detectPoses(dancemove, feedback) {
+    console.log(dancemoves);
+    // var one = "4",
+    // two = "6",
+    // op = "==";
+    // if (op in operators && operators[op](+one, +two)) {
+    //     //do something
+    // }
+
+
+    // for (let pose of poses) {
+    //     pose = pose.pose;
         
 
+<<<<<<< Updated upstream
         if(pose.leftWrist.y < pose.nose.y && pose.leftWrist.confidence > 0.1 && time > 10 && time < 73) {
             console.log(pose.leftWrist);
             lotsOfEmoji(3);
         }
         //hier komen functies die danspasjes detecten
     }
+=======
+    //     if(pose.leftWrist.y < pose.nose.y && pose.leftWrist.confidence > 0.1 && time > 10 && time < 73) {
+    //         console.log(pose.leftWrist);
+    //         lotsOfEmoji(3);
+    //     }
+    //     //hiero komen functies die danspasjes detecten
+    // }
+>>>>>>> Stashed changes
 }
 
 
