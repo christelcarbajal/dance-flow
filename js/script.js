@@ -3,19 +3,28 @@ const emoji = document.querySelector("#emoji");
 const div = document.querySelector("#message")
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+// const ctx = canvas.getContext("2d");
 const audio = new Audio('music.mp3');
 
-const playerCount = document.getElementById('playerCount');
+const text = document.getElementById('text');
+
+var focused = true;
+
+window.onfocus = function() {
+    focused = true;
+};
+window.onblur = function() {
+    focused = false;
+};
 
 let time = 1;
 let isModelLoaded = false;
 let noMusicPlaying = true;
 let poses = []
-ctx.strokeStyle = 'red';
-ctx.lineWidth = 3;
-ctx.translate(640, 0);
-ctx.scale(-1, 1);
+// ctx.strokeStyle = 'red';
+// ctx.lineWidth = 3;
+// ctx.translate(640, 0);
+// ctx.scale(-1, 1);
 
 let animating = false
 
@@ -25,29 +34,64 @@ emojiArray = [
     "🌟", 
     "💯", 
     "💥", 
-    "👌"
+    "👌",
 ];
 
 let timeline = [
 
     {
         "start":5,
-        "end":20,
-        "func":"playerCount.innerHTML = poses.length"
+        "end":39,
+        "func":"screenText(poses.length + ' players are detected', '1em')"
     },
 
     {
-        "start":21,
-        "end":21,
-        "func":"console.log('begin zang'); createArtist('move_1.mp4'); "
-    },
-
-    {
-        "start":1,
+        "start":40,
         "end":40,
-        //detectPoses() moet hiero nog ff veranderd worden naar goede functie!
-        "func":"detectPoses('handsUp', 3);"
-    }
+        "func":"screenText('Get ready!', '1em')"
+    },
+
+    {
+        "start":44,
+        "end":44,
+        "func":"screenText('3', '1.2em')"
+    },
+
+    {
+        "start":46,
+        "end":46,
+        "func":"screenText('2', '1.4em')"
+    },
+
+    {
+        "start":49,
+        "end":49,
+        "func":"screenText('1', '1.6em')"
+    },
+
+    {
+        "start":51,
+        "end":51,
+        "func":"console.log('begin zang'); createArtist('TWY.mp4'); "
+    },
+
+    {
+        "start":55,
+        "end":80,
+        "func":"detectPoses(3, 'wristAboveShoulder');"
+    },
+
+    {
+        "start":81,
+        "end":85,
+        "func":"detectPoses(3, 'wristBelowShoulder');"
+    },
+
+    {
+        "start":86,
+        "end":90,
+        "func":"detectPoses(3, 'wristAboveShoulder');"
+    },
 
 ];
 
@@ -64,15 +108,58 @@ let dancemoves = {
         "operator" : ">",
         "bodyPart2" : "nose",
         "axis" : "y"
+    },
+    "wristAboveHip" : {
+        "bodyPart1" : "leftWrist",
+        "operator" : "<",
+        "bodyPart2" : "leftHip",
+        "axis" : "y"
+    },
+    "wristBelowEye" : {
+        "bodyPart1" : "leftWrist",
+        "operator" : ">",
+        "bodyPart2" : "leftEye",
+        "axis" : "y"
+    },
+    "wristAboveShoulder" : {
+        "bodyPart1" : "leftWrist",
+        "operator" : "<",
+        "bodyPart2" : "leftShoulder",
+        "axis" : "y"
+    },
+    "wristBelowShoulder" : {
+        "bodyPart1" : "leftWrist",
+        "operator" : ">",
+        "bodyPart2" : "leftShoulder",
+        "axis" : "y"
     }
 };
 
+// BODYPARTS::::
+// leftAnkle
+// leftEar
+// leftElbow
+// leftEye
+// leftHip
+// leftKnee
+// leftShoulder
+// leftWrist
+// nose
+// rightAnkle
+// rightEar
+// rightElbow
+// rightEye
+// rightHip
+// rightKnee
+// rightShoulder
+// rightWrist
+
 let operators = {
-    "==": function(a,b){return a==b;},
-    "<=": function(a,b){return a<=b;},
-    ">=": function(a,b){return a>=b;},
-    "<": function(a,b){return a<b;},
-    ">": function(a,b){return a>b;}
+    "==": function(a,b){return a==b;}, //equal
+    "<=": function(a,b){return a<=b;}, //equal or smaller
+    ">=": function(a,b){return a>=b;}, //equal or bigger
+    "<": function(a,b){return a<b;}, //smaller
+    ">": function(a,b){return a>b;} //bigger
 };
 
 function lotsOfEmoji(x) {
@@ -100,12 +187,28 @@ function createEmoji(position) {
     });
 }
 
+function playVideo() {
+    let vid = document.getElementById('vid');
+    vid.play();
+}
+
+function pauseVideo() {
+    let vid = document.getElementById('vid');
+    vid.pause();
+}
+
 function playMusic() {
     if(noMusicPlaying) {
         console.log('started')
         audio.play();
         noMusicPlaying = false;
     }
+}
+
+function pauseMusic() {
+    console.log('stopped')
+    noMusicPlaying = true;
+    audio.pause();
 }
 
 //Tracking part
@@ -121,6 +224,11 @@ function modelLoaded() {
     console.log('Model Loaded!');
     isModelLoaded = true;
     div.innerHTML = "Posenet model loaded!"
+}
+
+function screenText(t,size) {
+    text.innerHTML = t;
+    text.style.fontSize = size;
 }
 
 // Create a webcam capture
@@ -140,45 +248,51 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 function createArtist(danceMove) {
     videoDiv = document.getElementById('centerDiv');
     videoDiv.innerHTML = `
-    <video src=${danceMove} width="900px" height="500px" autoplay></video>
+    <video src=${danceMove} width="900px" height="500px" autoplay id="vid"></video>
     `;
 }
 
 function gameLoop() {
     if(isModelLoaded) {
         // ctx.drawImage(video, 0, 0, 640, 360); //16:9
-        ctx.beginPath();
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = 'black';
-        ctx.stroke();
-        drawKeypoints();
-        drawSkeleton();
+        // ctx.beginPath();
+        // ctx.fillRect(0,0,canvas.width,canvas.height);
+        // ctx.fillStyle = 'black';
+        // ctx.stroke();
+        // drawKeypoints();
+        // drawSkeleton();
 
         //activating pose detection (inside here you can place timestamps)
         
-        // playMusic();
+        if (!focused) {
+            pauseMusic();
+            if(document.getElementById('vid') !== null) {
+                pauseVideo();
+            }
+        } else {
+            playMusic();
+            if(document.getElementById('vid') !== null) {
+                playVideo();
+            }
 
-        //timer
-        time+=1;
-        console.log(time)
+            //timer
+            if(!noMusicPlaying) {
+                time+=1;
+                console.log(time);
+            }
 
-        for(let timing of timeline) {
-            if(time >= parseInt(timing.start) && time <= parseInt(timing.end)) {
-                var F = new Function (timing.func);
-                F()
+            for(let timing of timeline) {
+                if(time >= parseInt(timing.start) && time <= parseInt(timing.end)) {
+                    var F = new Function (timing.func);
+                    F()
+                }
             }
         }
 
-        // if ( time <= 20) {
-        //     playerCount.innerHTML = poses.length;
-        // }
 
-        // if(time == 21) {
-        //     console.log('begin zang');
-        //     createTWY("move_1.mp4");
-        // }
     } else {
-        console.log('No model')
+        console.log('No model');
+        screenText('You need to turn on you camera', '1em');
     }
     setTimeout(() => {
         window.requestAnimationFrame(gameLoop);
@@ -191,21 +305,29 @@ function gameLoop() {
  * @param {int} feedback Amount of feedback
  */
 
-function detectPoses(move, feedback) {
+function detectPoses(feedback, move, move2 = null) {
     move = dancemoves[move]
-    console.log(move);
-    // var one = "4",
-    // two = "6",
-    // op = "==";
-    // && operators[op](+one, +two)
+    // console.log(Object.keys(move).length);
+
     for (let pose of poses) {
         pose = pose.pose;
 
+        //checking first move
         if (move.operator in operators && operators[move.operator](pose[move.bodyPart1][move.axis], pose[move.bodyPart2][move.axis])) {
-            lotsOfEmoji(feedback);
+            //if 2nd move, check that one too
+            if (move2 !== null) {
+                if (move2.operator in operators && operators[move2.operator](pose[move2.bodyPart1][move2.axis], pose[move2.bodyPart2][move2.axis])) {
+                    lotsOfEmoji(feedback);
+                    console.log('goed')
+                } else {
+                    console.log('geen goede houding')
+                }
+            } else {
+                lotsOfEmoji(feedback);
+                console.log('goed')
+            }
         } else {
             console.log('geen goede houding')
-            console.log(pose[move.bodyPart2])
         }
     }
 

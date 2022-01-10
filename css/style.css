@@ -94,3 +94,7 @@ div {
     justify-content:center;
     align-items: center;
 }
+
+video {
+    object-fit: fill;
+}
