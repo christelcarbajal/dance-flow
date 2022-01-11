@@ -40,58 +40,82 @@ emojiArray = [
 let timeline = [
 
     {
-        "start":5,
+        "start":2,
         "end":39,
-        "func":"screenText(poses.length + ' players are detected', '1em')"
+        "func":"screenText(poses.length + ' players detected', '1em')"
     },
 
     {
         "start":40,
         "end":40,
-        "func":"screenText('Get ready!', '1em')"
+        "func":"screenText('Get ready!', '1.5em')"
     },
 
     {
         "start":44,
         "end":44,
-        "func":"screenText('3', '1.2em')"
+        "func":"screenText('3', '2em')"
     },
 
     {
         "start":46,
         "end":46,
-        "func":"screenText('2', '1.4em')"
+        "func":"screenText('2', '2.5em')"
     },
 
     {
         "start":49,
         "end":49,
-        "func":"screenText('1', '1.6em')"
+        "func":"screenText('1', '3em')"
     },
 
     {
         "start":51,
         "end":51,
-        "func":"console.log('begin zang'); createArtist('TWY.mp4'); "
+        "func":"console.log('begin zang'); createArtist('TWY.mp4'); screenText(' ','1px'); div.innerHTML = ' '; "
     },
 
     {
         "start":55,
         "end":80,
-        "func":"detectPoses(3, 'wristAboveShoulder');"
+        "func":"detectPoses(2, 'wristAboveShoulder');"
     },
 
     {
         "start":81,
         "end":85,
-        "func":"detectPoses(3, 'wristBelowShoulder');"
+        "func":"detectPoses(5, 'wristAboveHip');"
     },
 
     {
         "start":86,
-        "end":90,
-        "func":"detectPoses(3, 'wristAboveShoulder');"
+        "end":95,
+        "func":"detectPoses(2, 'wristAboveShoulder');"
     },
+
+    {
+        "start":95,
+        "end":154,
+        "func":"detectPoses(2, 'wristAboveHip');"
+    },
+
+    {
+        "start":154,
+        "end":158,
+        "func":"detectPoses(5, 'wristAboveShoulder');"
+    },
+
+    {
+        "start":159,
+        "end":180,
+        "func":"detectPoses(2, 'wristAboveHip');"
+    },
+
+    {
+        "start":181,
+        "end":181,
+        "func":"screenText('end','1em');"
+    }
 
 ];
 
