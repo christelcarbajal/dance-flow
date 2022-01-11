@@ -14,13 +14,19 @@ header {
 }
 
 .logo img {
-  float: right;
+  /* float: right;
   height: 40px;
   width: 400px;
   position:absolute;
   top:30px;
   left:1600px;
-  overflow:hidden;
+  overflow:hidden; */
+  /* float: left; */
+  position:relative;
+  bottom:60px; 
+  left:175px;
+  width: 400px;
+  height: 40px;
 }
 
 .nav__links {
